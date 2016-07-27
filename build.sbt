@@ -7,10 +7,6 @@ version := "1.0"
 
 scalaVersion := "2.11.8"
 
-version := "1.0-RC6"
-
-organization := "org.querki"
-
 scalaVersion := "2.11.8"
 
 crossScalaVersions := Seq("2.10.5", "2.11.8")
@@ -19,19 +15,23 @@ libraryDependencies ++= Seq(
   "org.scala-js" %%% "scalajs-dom" % "0.9.0"
 )
 
-jsDependencies in Test += RuntimeDOM
+homepage := Some(url("https://github.com/cibotech/leaflet-facade"))
+
+jsDependencies ++= Seq(
+  "org.webjars.bower" % "leaflet" % "1.0.0-rc.1"
+    / "leaflet.js"
+)
+
 
 /**
   * If eventually publishing
   */
-//homepage := Some(url("http://github/"))
-//
 //licenses += ("MIT License", url("http://www.opensource.org/licenses/mit-license.php"))
-//
+
 //scmInfo := Some(ScmInfo(
-//  url("https://github.com/  "),
-//  "scm:git:git@github.com:  .git",
-//  Some("scm:git:git@github.com:   .git")))
+//  url("https://github.com/cibotech/leaflet-facade"),
+//  "scm:git:git@github.com/cibotech/leaflet-facade.git",
+//  Some("scm:git:git@github.com/cibotech/leaflet-facade.git")))
 //
 //publishMavenStyle := true
 //
@@ -47,10 +47,9 @@ jsDependencies in Test += RuntimeDOM
 //  <developers>
 //    <developer>
 //      <id></id>
-//      <name>Mark Waks</name>
-//      <url>https://github.com/jducoeur/</url>
+//      <name></name>
+//      <url>https://github.com/cibotech/leaflet-facade</url>
 //    </developer>
 //  </developers>
 //  )
-
-pomIncludeRepository := { _ => false }
+//pomIncludeRepository := { _ => false }
