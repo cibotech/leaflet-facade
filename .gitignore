@@ -1,0 +1,11 @@
+.idea/
+.temp/
+js/target/
+jvm/target/
+node_modules/
+project/target/
+project/project/
+shared/target/
+target/
+*/**/.DS_Store
+
