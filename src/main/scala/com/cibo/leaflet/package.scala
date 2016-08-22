@@ -1,6 +1,5 @@
 package com.cibo
 
-import scala.scalajs.js
 
 package object leaflet {
   /**
