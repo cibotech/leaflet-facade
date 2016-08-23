@@ -106,7 +106,6 @@ object Projection extends IProjection {
 }
 
 @JSName("L.LatLngBounds")
-class LatLngBounds(southWest: LatLng, northEast: LatLng) extends js.Object
 class LatLngBounds(southWest: LatLng, northEast: LatLng) extends js.Object {
   def getSouthWest(): LatLng  = js.native
   def getNorthEast(): LatLng  = js.native
@@ -120,10 +119,8 @@ class LatLngBounds(southWest: LatLng, northEast: LatLng) extends js.Object {
 }
 
 object LatLngBounds {
-  def apply(southWest: LatLng, northEast: LatLng): LatLngBounds = new LatLngBounds(southWest, northEast)
-  def apply(latlngs: js.Array[LatLng]           ): LatLngBounds = new LatLngBounds(latlngs(0), latlngs(1))
   def apply(northEast: LatLng, southWest: LatLng): LatLngBounds = new LatLngBounds(southWest, northEast)
-  def apply(latlngs: js.Array[LatLng]): LatLngBounds = new LatLngBounds(latlngs(0), latlngs(1))
+  def apply(latlngs: js.Array[LatLng]): LatLngBounds            = new LatLngBounds(latlngs(0), latlngs(1))
 }
 
 @JSName("L.LatLng")
