@@ -16,11 +16,12 @@ import scala.scalajs.js.annotation.JSName
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.Element
 
-
 @JSName("L")
 @js.native
 object Leaflet extends js.Object {
+
   type PolygonCoords = js.Array[js.Array[LatLng]]
+
   type MultipolygonCoords = js.Array[PolygonCoords]
 
   @JSName("map")
@@ -284,7 +285,6 @@ class Control(position: UndefOr[String] = "topright") extends js.Object {
   def addTo(map: LeafletMap): Control = js.native
 
   def remove(): Control = js.native
-
 }
 
 @JSName("L.Control.Scale")
