@@ -18,6 +18,7 @@ import scala.scalajs.js.annotation.JSName
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.Element
 
+
 @JSName("L")
 @js.native
 object Leaflet extends js.Object {
