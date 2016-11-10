@@ -37,7 +37,6 @@ lazy val root = project.in(file("."))
     .settings(
       name := "LeafletExample",
       version := "1.0.0-RC1",
-      persistLauncher in Compile := true,
       libraryDependencies ++= Seq(
         "org.scala-js" %%% "scalajs-dom" % "0.9.0",
         "com.github.karasiq" % "scalajs-marked_sjs0.6_2.11" % "1.0.1",
@@ -47,22 +46,6 @@ lazy val root = project.in(file("."))
       jsDependencies ++= Seq(
         "org.webjars.bower" % "leaflet" % "1.0.0-rc.1"
           / "leaflet.js"
-      ),
-      requiresDOM := true,
-      scalaJSStage in Test := FastOptStage,
-      persistLauncher in Compile := true,
-      persistLauncher in Test := false
+      )
     )
   .enablePlugins(ScalaJSPlugin)
-
-//lazy val example = project.in(file("."))
-//    .settings(
-//      name := "LeafletExample",
-//      version := "0.1-SNAPSHOT",
-//      persistLauncher in Compile := true,
-//      persistLauncher in Test := false,
-//      libraryDependencies ++= Seq(
-//        "org.scala-js" %%% "scalajs-dom" % "0.9.0"
-//      )
-//    )
-//  .enablePlugins(ScalaJSPlugin)
