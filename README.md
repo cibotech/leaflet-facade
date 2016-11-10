@@ -45,6 +45,10 @@ Leaflet
 
 
 ###License
+
+BSD 3-Clause License
+
+
 Copyright (c) 2016, CiBO Technologies
 All rights reserved.
 
