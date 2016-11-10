@@ -20,11 +20,11 @@ abstract class JSOptionBuilder[T <: js.Object, B <: JSOptionBuilder[T, _]](copy:
     copy(dict + (name -> opt))
   }
 
-  def build = {
+  def build: T = {
     dict.toJSDictionary.asInstanceOf[T]
   }
 
-  override def toString = {
+  override def toString: String = {
     s"""{\n${dict.keys.map{ key => s"  $key = ${dict(key).toString}"}.mkString("\n")}\n}"""
   }
 }
