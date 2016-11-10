@@ -36,7 +36,7 @@ releaseCrossBuild := true
 lazy val root = project.in(file("."))
     .settings(
       name := "LeafletExample",
-      version := "0.1-SNAPSHOT",
+      version := "1.0.0-RC1",
       persistLauncher in Compile := true,
       libraryDependencies ++= Seq(
         "org.scala-js" %%% "scalajs-dom" % "0.9.0",
