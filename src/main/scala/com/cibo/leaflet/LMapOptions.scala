@@ -17,47 +17,48 @@ trait LMapOptions extends js.Object
 
 object LMapOptions extends LMapOptionsBuilder(noOpts)
 
-class LMapOptionsBuilder(val dict: OptMap) extends JSOptionBuilder[LMapOptions, LMapOptionsBuilder](new LMapOptionsBuilder(_)) {
+class LMapOptionsBuilder(val dict: OptMap)
+  extends JSOptionBuilder[LMapOptions, LMapOptionsBuilder](new LMapOptionsBuilder(_)) {
 
-  def preferCanvas(v: Boolean) = jsOpt("preferCanvas", v)
+  def preferCanvas(v: Boolean): LMapOptionsBuilder = jsOpt("preferCanvas", v)
 
-  def attributionControl(v: Boolean) = jsOpt("attributionControl", v)
+  def attributionControl(v: Boolean): LMapOptionsBuilder = jsOpt("attributionControl", v)
 
-  def zoomControl(v: Boolean) = jsOpt("zoomControl", v)
+  def zoomControl(v: Boolean): LMapOptionsBuilder = jsOpt("zoomControl", v)
 
-  def closePopupOnClick(v: Boolean) = jsOpt("closePopupOnClick", v)
+  def closePopupOnClick(v: Boolean): LMapOptionsBuilder = jsOpt("closePopupOnClick", v)
 
-  def zoomSnap(v: Int) = jsOpt("zoomSnap", v)
+  def zoomSnap(v: Int): LMapOptionsBuilder = jsOpt("zoomSnap", v)
 
-  def zoomDelta(v: Int) = jsOpt("zoomDelta", v)
+  def zoomDelta(v: Int): LMapOptionsBuilder = jsOpt("zoomDelta", v)
 
-  def trackResize(v: Boolean) = jsOpt("trackResize", v)
+  def trackResize(v: Boolean): LMapOptionsBuilder = jsOpt("trackResize", v)
 
-  def boxZoom(v: Boolean) = jsOpt("boxZoom", v)
+  def boxZoom(v: Boolean): LMapOptionsBuilder = jsOpt("boxZoom", v)
 
-  def doubleClickZoom(v: Boolean | String) = jsOpt("doubleClickZoom", v)
+  def doubleClickZoom(v: Boolean | String): LMapOptionsBuilder = jsOpt("doubleClickZoom", v)
 
-  def dragging(v: Boolean) = jsOpt("dragging", v)
+  def dragging(v: Boolean): LMapOptionsBuilder = jsOpt("dragging", v)
 
-  def zoom(v: Number) = jsOpt("zoom", v)
+  def zoom(v: Number): LMapOptionsBuilder = jsOpt("zoom", v)
 
-  def minZoom(v: Number) = jsOpt("minZoom", v)
+  def minZoom(v: Number): LMapOptionsBuilder = jsOpt("minZoom", v)
 
-  def maxZoom(v: Number) = jsOpt("maxZoom", v)
+  def maxZoom(v: Number): LMapOptionsBuilder = jsOpt("maxZoom", v)
 
-  def fadeAnimation(v: Boolean) = jsOpt("fadeAnimation", v)
+  def fadeAnimation(v: Boolean): LMapOptionsBuilder = jsOpt("fadeAnimation", v)
 
-  def markerZoomAnimation(v: Boolean) = jsOpt("markerZoomAnimation", v)
+  def markerZoomAnimation(v: Boolean): LMapOptionsBuilder = jsOpt("markerZoomAnimation", v)
 
-  def transform3DLimit(v: Int) = jsOpt("transform3DLimit", v)
+  def transform3DLimit(v: Int): LMapOptionsBuilder = jsOpt("transform3DLimit", v)
 
-  def zoomAnimation(v: Boolean) = jsOpt("zoomAnimation", v)
+  def zoomAnimation(v: Boolean): LMapOptionsBuilder = jsOpt("zoomAnimation", v)
 
-  def zoomAnimationThreshold(v: Int) = jsOpt("zoomAnimationThreshold", v)
+  def zoomAnimationThreshold(v: Int): LMapOptionsBuilder = jsOpt("zoomAnimationThreshold", v)
 
-  def touchZoom(v: Boolean) = jsOpt("touchZoom", v)
+  def touchZoom(v: Boolean): LMapOptionsBuilder = jsOpt("touchZoom", v)
 
-  def tap(v: Boolean) = jsOpt("tap", v)
+  def tap(v: Boolean): LMapOptionsBuilder = jsOpt("tap", v)
 
-  def scrollWheelZoom(v: Boolean) = jsOpt("scrollWheelZoom", v)
+  def scrollWheelZoom(v: Boolean): LMapOptionsBuilder = jsOpt("scrollWheelZoom", v)
 }
