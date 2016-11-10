@@ -10,8 +10,6 @@
 package com.cibo.leaflet
 
 import Leaflet.MultipolygonCoords
-import com.cibo.leaflet.{JSOptionBuilder, LMapOptions, OptMap}
-
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
 import scala.scalajs.js.annotation.JSName
