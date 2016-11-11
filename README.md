@@ -6,7 +6,9 @@ Works with [Leaflet](http://leafletjs.com/reference-1.0.0.html) version 1.0.0
 ##Getting Started
 + Add the following to your sbt build  
 ```
-libraryDependencies += "com.cibo.leaflet-facade" %%% "leaflet-facade" % "1.0.0-RC1"
+resolvers += Resolver.bintrayRepo("cibotech", "public")
+
+libraryDependencies += "com.cibo" %%% "leaflet-facade" % "1.0.0"
 ```
   
 + Note - this library currently does not include the leaflet css files.  In order for styling to work, first add the leaflet.css to your html
