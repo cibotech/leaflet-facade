@@ -1,8 +1,7 @@
 #Scalajs Leaflet Facade  
 A type safe Scala.js facade for Leaflet
 
-Works with Leaflet version 1.0.0
-+ [Documentation](http://leafletjs.com/reference-1.0.0.html)
+Works with [Leaflet](http://leafletjs.com/reference-1.0.0.html) version 1.0.0
 
 ##Getting Started
 + Add the following to your sbt build  
