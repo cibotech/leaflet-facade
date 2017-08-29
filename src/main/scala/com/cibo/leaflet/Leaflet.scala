@@ -52,6 +52,12 @@ object Leaflet extends js.Object {
   def layerGroup[T <: Layer](layers: js.Array[T]): LayerGroup = js.native
 
   def on(name: String, fn: js.Function1[Evented, Evented]): this.type = js.native
+
+  def circle(latLng: LatLng, radius: Double, pathOptions: PathOptions): Circle = js.native
+
+  def marker(latlngs: LatLng): Marker = js.native
+
+  def geoJSON(data: js.Object): GeoJSON = js.native
 }
 
 @JSName("L.Evented")
@@ -62,6 +68,10 @@ class Evented extends js.Object {
 
   def on(name: String, fn: js.Function1[Evented, Evented]): Evented = js.native
 }
+
+@JSName("L.GeoJSON")
+@js.native
+class GeoJSON(data: js.Object, options: js.UndefOr[PathOptions] = js.undefined) extends FeatureGroup
 
 @js.native
 class GridLayerOptions extends js.Object
@@ -82,6 +92,35 @@ class GridLayerOptionsBuilder(val dict: OptMap)
   def maxZoom(v: Number): GridLayerOptionsBuilder = jsOpt("maxZoom", v)
 
   def noWrap(v: Boolean = false): GridLayerOptionsBuilder = jsOpt("noWrap", v)
+}
+
+@JSName("L.Marker")
+@js.native
+class Marker extends js.Object {
+  def addTo(map: LeafletMap): Layer = js.native
+}
+
+@JSName("L.MouseEvent")
+@js.native
+class MouseEvent extends js.Object {
+  val latlng: LatLng = js.native
+  val layerPoint: Point = js.native
+  val containerPoint: Point = js.native
+}
+
+@JSName("L.Circle")
+@js.native
+class Circle extends Path {
+  def on(name: String, fn: js.Function1[MouseEvent, Unit]): Circle = js.native
+}
+
+@JSName("L.FeatureGroup")
+@js.native
+abstract class FeatureGroup extends Layer {
+  def setStyle(pathOptions: PathOptions): FeatureGroup = js.native
+  def bringToFront(): FeatureGroup = js.native
+  def bringToBack(): FeatureGroup = js.native
+  def getBounds(): LatLngBounds = js.native
 }
 
 @JSName("L.TileLayer")
@@ -145,6 +184,10 @@ class LeafletMap(id: String, options: UndefOr[LMapOptions] = js.undefined) exten
   def panTo(latLng: LatLng): LeafletMap = js.native
 
   def remove(): LeafletMap = js.native
+
+  def zoomIn(): LeafletMap = js.native
+
+  def zoomOut(): LeafletMap = js.native
 }
 
 @JSName("L.GridLayer")
@@ -381,15 +424,21 @@ class PathOptionsBuilder(val dict: OptMap)
   def fillOpacity(v: Double): PathOptionsBuilder = jsOpt("fillOpacity", v)
 
   def className(v: String): PathOptionsBuilder = jsOpt("className", v)
+
+  def weight(v: Int): PathOptionsBuilder = jsOpt("weight", v)
 }
 
 @JSName("L.Polygon")
 @js.native
-class Polygon extends Polyline
+class Polygon(val latlngs: js.Array[LatLng]) extends Polyline {
+  def toGeoJSON(): js.Object = js.native
+}
 
 @JSName("L.Polygon")
 @js.native
-class MultiPolygon(multiPolygon: MultipolygonCoords, opts: UndefOr[PolyLineOptions] = js.undefined) extends Polyline
+class MultiPolygon(multiPolygon: MultipolygonCoords, opts: UndefOr[PolyLineOptions] = js.undefined) extends Polyline {
+  def toGeoJSON(): js.Object = js.native
+}
 
 @JSName("L.LayerGroup")
 @js.native
