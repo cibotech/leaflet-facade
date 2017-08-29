@@ -184,6 +184,10 @@ class LeafletMap(id: String, options: UndefOr[LMapOptions] = js.undefined) exten
   def panTo(latLng: LatLng): LeafletMap = js.native
 
   def remove(): LeafletMap = js.native
+
+  def zoomIn(): LeafletMap = js.native
+
+  def zoomOut(): LeafletMap = js.native
 }
 
 @JSName("L.GridLayer")
