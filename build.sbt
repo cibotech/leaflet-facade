@@ -29,14 +29,14 @@ publishMavenStyle := true
 publishArtifact in Test := false
 publishArtifact in IntegrationTest := false
 
-scalaVersion := "2.11.8"
-crossScalaVersions := Seq("2.10.5", "2.11.8")
+scalaVersion := "2.12.4"
+crossScalaVersions := Seq("2.11.8", "2.12.4")
 releaseCrossBuild := true
 
 lazy val root = project.in(file("."))
     .settings(
       libraryDependencies ++= Seq(
-        "org.scala-js" %%% "scalajs-dom" % "0.9.0"
+        "org.scala-js" %%% "scalajs-dom" % "0.9.4"
       ),
       jsDependencies ++= Seq(
         "org.webjars.bower" % "leaflet" % "1.0.0-rc.1"

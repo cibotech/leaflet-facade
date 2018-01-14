@@ -10,13 +10,14 @@
 package com.cibo.leaflet
 
 import Leaflet.MultipolygonCoords
+
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
-import scala.scalajs.js.annotation.JSName
+import scala.scalajs.js.annotation.{JSGlobal, JSName}
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.Element
 
-@JSName("L")
+@JSGlobal("L")
 @js.native
 object Leaflet extends js.Object {
 
@@ -60,7 +61,7 @@ object Leaflet extends js.Object {
   def geoJSON(data: js.Object): GeoJSON = js.native
 }
 
-@JSName("L.Evented")
+@JSGlobal("L.Evented")
 @js.native
 class Evented extends js.Object {
   val `type`: String = js.native
@@ -69,10 +70,11 @@ class Evented extends js.Object {
   def on(name: String, fn: js.Function1[Evented, Evented]): Evented = js.native
 }
 
-@JSName("L.GeoJSON")
+@JSGlobal("L.GeoJSON")
 @js.native
 class GeoJSON(data: js.Object, options: js.UndefOr[PathOptions] = js.undefined) extends FeatureGroup
 
+@JSGlobal
 @js.native
 class GridLayerOptions extends js.Object
 
@@ -94,13 +96,13 @@ class GridLayerOptionsBuilder(val dict: OptMap)
   def noWrap(v: Boolean = false): GridLayerOptionsBuilder = jsOpt("noWrap", v)
 }
 
-@JSName("L.Marker")
+@JSGlobal("L.Marker")
 @js.native
 class Marker extends js.Object {
   def addTo(map: LeafletMap): Layer = js.native
 }
 
-@JSName("L.MouseEvent")
+@JSGlobal("L.MouseEvent")
 @js.native
 class MouseEvent extends js.Object {
   val latlng: LatLng = js.native
@@ -108,13 +110,13 @@ class MouseEvent extends js.Object {
   val containerPoint: Point = js.native
 }
 
-@JSName("L.Circle")
+@JSGlobal("L.Circle")
 @js.native
 class Circle extends Path {
   def on(name: String, fn: js.Function1[MouseEvent, Unit]): Circle = js.native
 }
 
-@JSName("L.FeatureGroup")
+@JSGlobal("L.FeatureGroup")
 @js.native
 abstract class FeatureGroup extends Layer {
   def setStyle(pathOptions: PathOptions): FeatureGroup = js.native
@@ -123,13 +125,13 @@ abstract class FeatureGroup extends Layer {
   def getBounds(): LatLngBounds = js.native
 }
 
-@JSName("L.TileLayer")
+@JSGlobal("L.TileLayer")
 @js.native
 class TileLayer(val urlTemplate: String, val tileLayerOptions: UndefOr[TileLayerOptions]) extends GridLayer
 
 case class TileLayerOptions(maxZoom: Double)
 
-@JSName("L.Layer")
+@JSGlobal("L.Layer")
 @js.native
 class Layer extends js.Object {
   def addTo(map: LeafletMap): Layer = js.native
@@ -141,7 +143,7 @@ class Layer extends js.Object {
   def getPane(name: UndefOr[String] = ""): HTMLElement = js.native
 }
 
-@JSName("L.ImageOverlay")
+@JSGlobal("L.ImageOverlay")
 @js.native
 class ImageOverlay extends Layer {
   def setUrl(url: String): ImageOverlay = js.native
@@ -151,10 +153,11 @@ class ImageOverlay extends Layer {
   def setOpacity(v: Double): ImageOverlay = js.native
 }
 
+@JSGlobal
 @js.native
 class ImageOverlayOptions extends js.Object
 
-@JSName("L.Map")
+@JSGlobal("L.Map")
 @js.native
 class LeafletMap(id: String, options: UndefOr[LMapOptions] = js.undefined) extends Evented {
   def setView(center: LatLng, zoom: Double, options: UndefOr[LZoomPanOptions] = js.undefined): LeafletMap = js.native
@@ -190,7 +193,7 @@ class LeafletMap(id: String, options: UndefOr[LMapOptions] = js.undefined) exten
   def zoomOut(): LeafletMap = js.native
 }
 
-@JSName("L.GridLayer")
+@JSGlobal("L.GridLayer")
 @js.native
 class GridLayer extends Layer {
   def this(gridLayerOpts: UndefOr[GridLayerOptions]) = this()
@@ -223,7 +226,7 @@ trait IProjection extends js.Object {
   val bounds: LatLngBounds = js.native
 }
 
-@JSName("L.Projection")
+@JSGlobal("L.Projection")
 @js.native
 object Projection extends IProjection {
   val LonLat: IProjection = js.native
@@ -231,7 +234,7 @@ object Projection extends IProjection {
   val SphericalMercator: IProjection = js.native
 }
 
-@JSName("L.LatLngBounds")
+@JSGlobal("L.LatLngBounds")
 @js.native
 class LatLngBounds(southWest: LatLng, northEast: LatLng) extends js.Object {
   def getSouthEast(): LatLng = js.native
@@ -266,7 +269,7 @@ object LatLngBounds {
   def apply(latlngs: js.Array[LatLng]): LatLngBounds = new LatLngBounds(latlngs(0), latlngs(1))
 }
 
-@JSName("L.LatLng")
+@JSGlobal("L.LatLng")
 @js.native
 class LatLng(val lat: Double, val lng: Double, val alt: UndefOr[Double] = js.undefined) extends js.Object {
   def this(lat: Double, lng: Double) = this(lat, lng, js.undefined)
@@ -287,7 +290,7 @@ object LatLng {
   def apply(latLng: js.Array[Double]): LatLng = new LatLng(latLng(0), latLng(1))
 }
 
-@JSName("L.Point")
+@JSGlobal("L.Point")
 @js.native
 class Point(x: Double, y: Double, round: UndefOr[Boolean] = js.undefined) extends js.Object {
   def this(coords: js.Array[Double]) = this(coords(0), coords(1))
@@ -316,7 +319,7 @@ class Point(x: Double, y: Double, round: UndefOr[Boolean] = js.undefined) extend
   def contains(): Boolean = js.native
 }
 
-@JSName("L.Control")
+@JSGlobal("L.Control")
 @js.native
 class Control(position: UndefOr[String] = "topright") extends js.Object {
   def getPosition(): String = js.native
@@ -330,7 +333,7 @@ class Control(position: UndefOr[String] = "topright") extends js.Object {
   def remove(): Control = js.native
 }
 
-@JSName("L.Control.Scale")
+@JSGlobal("L.Control.Scale")
 @js.native
 class ControlScale(scaleOptions: UndefOr[ScaleOptions] = js.undefined) extends Control
 
@@ -338,6 +341,7 @@ object ControlScale {
   def apply(scaleOptions: UndefOr[ScaleOptions] = js.undefined): ControlScale = new ControlScale(scaleOptions)
 }
 
+@JSGlobal
 @js.native
 class ScaleOptions extends js.Object
 
@@ -355,7 +359,7 @@ class ScaleOptionsBuilder(val dict: OptMap)
   def updateWhenIdle(v: Boolean): ScaleOptionsBuilder = jsOpt("updateWhenIdle", v)
 }
 
-@JSName("L.Control.Zoom")
+@JSGlobal("L.Control.Zoom")
 @js.native
 class ControlZoom(zoomOptions: UndefOr[ZoomOptions] = js.undefined) extends Control
 
@@ -363,6 +367,7 @@ object ControlZoom {
   def apply(zoomOptions: UndefOr[ZoomOptions] = js.undefined): ControlZoom = new ControlZoom(zoomOptions)
 }
 
+@JSGlobal
 @js.native
 class ZoomOptions extends js.Object
 
@@ -380,7 +385,7 @@ class ZoomOptionsBuilder(val dict: OptMap)
   def zoomOutTitle(v: String): ZoomOptionsBuilder = jsOpt("zoomOutTitle", v)
 }
 
-@JSName("L.Path")
+@JSGlobal("L.Path")
 @js.native
 abstract class Path extends Layer {
   def setStyle(pathOptions: PathOptions): Path = js.native
@@ -390,12 +395,13 @@ abstract class Path extends Layer {
   def bringToFront(): Path = js.native
 }
 
-@JSName("L.Polyline")
+@JSGlobal("L.Polyline")
 @js.native
 class Polyline extends PolyLineOptions {
   def getBounds(): LatLngBounds = js.native
 }
 
+@JSGlobal
 @js.native
 class PolyLineOptions extends Path
 
@@ -409,6 +415,7 @@ class PolyLineOptionsBuilder(val dict: OptMap)
   def fillOpacity(v: Double): PolyLineOptionsBuilder = jsOpt("fillOpacity", v)
 }
 
+@JSGlobal
 @js.native
 class PathOptions extends js.Object
 
@@ -428,19 +435,19 @@ class PathOptionsBuilder(val dict: OptMap)
   def weight(v: Int): PathOptionsBuilder = jsOpt("weight", v)
 }
 
-@JSName("L.Polygon")
+@JSGlobal("L.Polygon")
 @js.native
 class Polygon(val latlngs: js.Array[LatLng]) extends Polyline {
   def toGeoJSON(): js.Object = js.native
 }
 
-@JSName("L.Polygon")
+@JSGlobal("L.Polygon")
 @js.native
 class MultiPolygon(multiPolygon: MultipolygonCoords, opts: UndefOr[PolyLineOptions] = js.undefined) extends Polyline {
   def toGeoJSON(): js.Object = js.native
 }
 
-@JSName("L.LayerGroup")
+@JSGlobal("L.LayerGroup")
 @js.native
 class LayerGroup extends Layer {
   def addLayer(layer: Layer): LayerGroup = js.native
@@ -460,7 +467,7 @@ class LayerGroup extends Layer {
   def eachLayer(fn: js.Function1[Layer, Unit]): LayerGroup = js.native
 }
 
-@JSName("L.Bounds")
+@JSGlobal("L.Bounds")
 @js.native
 class Bounds extends js.Object {
   val min: Point = js.native
@@ -472,13 +479,13 @@ class Bounds extends js.Object {
   def getTopRight(): Point = js.native
 }
 
-@JSName("L.PolyUtil")
+@JSGlobal("L.PolyUtil")
 @js.native
 object PolyUtil extends js.Object {
   def clipPolygon(points: js.Array[Point], bounds: Bounds): js.Array[Point] = js.native
 }
 
-@JSName("L.Util")
+@JSGlobal("L.Util")
 @js.native
 object LeafletUtil extends js.Object {
   def stamp(obj: js.Object): Double = js.native
