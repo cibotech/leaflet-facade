@@ -1,11 +1,11 @@
-#Scalajs Leaflet Facade  
+# Scalajs Leaflet Facade  
 A type safe Scala.js facade for Leaflet
 
 Works with [Leaflet](http://leafletjs.com/reference-1.0.0.html) version 1.0.0
 
-##Getting Started
+## Getting Started
 + Add the following to your sbt build  
-```
+```scala
 resolvers += Resolver.bintrayRepo("cibotech", "public")
 
 libraryDependencies += "com.cibo" %%% "leaflet-facade" % "1.0.0"
@@ -17,10 +17,10 @@ libraryDependencies += "com.cibo" %%% "leaflet-facade" % "1.0.0"
 ```
 
 
-###Example Usage
+### Example Usage
 + Now you can enjoy leaflet with the type safety of Scala!    
   
-```
+```scala
 val leafletMap = Leaflet.map("demo-map").setView(LatLng(51.505, -0.09), 13)
 
 Leaflet
@@ -39,13 +39,13 @@ Leaflet
 ```
 
 
-###Demo
+### Demo
 [Demo Page](http://cibotech.github.io/leaflet-facade)  
 
 + A full example can be found under the `/example directory`
 
 
-###License
+### License
 
 BSD 3-Clause License
 
