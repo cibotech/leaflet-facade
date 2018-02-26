@@ -1,4 +1,6 @@
 import de.heikoseeberger.sbtheader.HeaderPattern
+import sbtrelease.ReleaseStateTransformations._
+import ReleaseTransformations._
 
 lazy val globalSettings = Seq(
   headers := Map(
@@ -18,7 +20,6 @@ lazy val globalSettings = Seq(
   ),
   organization := "com.cibo",
   homepage := Some(url("https://github.com/cibotech/leaflet-facade")),
-  licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
   scmInfo := Some(ScmInfo(
     url("https://github.com/cibotech/leaflet-facade"),
     "scm:git:git@github.com/cibotech/leaflet-facade.git",
@@ -28,18 +29,36 @@ lazy val globalSettings = Seq(
   publishArtifact in IntegrationTest := false,
   scalaVersion := "2.12.4",
   crossScalaVersions := Seq("2.11.8", "2.12.4"),
-  releaseCrossBuild := true
+  releaseCrossBuild := true,
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    releaseStepCommand("createHeaders"),
+    setReleaseVersion,
+    commitReleaseVersion,
+    tagRelease,
+    publishArtifacts,
+    setNextVersion,
+    commitNextVersion,
+    pushChanges
+  ),
+  bintrayOrganization  := Some("cibotech"),
+  bintrayRepository    := "public",
+  bintrayPackageLabels := Seq("scala", "scala.js", "leaflet"),
+  requiresDOM := true
 )
 
 lazy val root = project.in(file("."))
     .aggregate(`leaflet-facade`, `leaflet-draw`)
     .settings(
-      publishArtifact := false
+      publishArtifact := false,
+      publish := {}
     )
 
 lazy val `leaflet-facade` = project.in(file("leaflet"))
     .settings(globalSettings)
     .settings(
+      licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
       name := "leaflet-facade",
       libraryDependencies ++= Seq(
         "org.scala-js" %%% "scalajs-dom" % "0.9.4"
@@ -54,6 +73,7 @@ lazy val `leaflet-facade` = project.in(file("leaflet"))
 lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
   .settings(globalSettings)
   .settings(
+    licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
     name := "leaflet-draw-facade",
     jsDependencies ++= Seq(
       "org.webjars.bower" % "leaflet-draw" % "0.4.9"
