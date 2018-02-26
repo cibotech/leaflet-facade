@@ -1,9 +1,5 @@
-import de.heikoseeberger.sbtheader.HeaderPattern
-
 lazy val globalSettings = Seq(
-  headers := Map(
-    "scala" -> (
-      HeaderPattern.cStyleBlockComment,
+  headerLicense := Some(HeaderLicense.Custom(
       s"""/* Copyright (c) 2018 CiBO Technologies - All Rights Reserved
          | * You may use, distribute, and modify this code under the
          | * terms of the BSD 3-Clause license.
@@ -14,9 +10,9 @@ lazy val globalSettings = Seq(
          | */
          |
        |""".stripMargin
-    )
-  ),
+  )),
   organization := "com.cibo",
+  organizationName := "CiBO Technologies",
   homepage := Some(url("https://github.com/cibotech/leaflet-facade")),
   licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
   scmInfo := Some(ScmInfo(
