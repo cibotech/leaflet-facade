@@ -118,11 +118,12 @@ class Circle extends Path {
 
 @JSGlobal("L.FeatureGroup")
 @js.native
-abstract class FeatureGroup extends Layer {
+class FeatureGroup extends Layer {
   def setStyle(pathOptions: PathOptions): FeatureGroup = js.native
   def bringToFront(): FeatureGroup = js.native
   def bringToBack(): FeatureGroup = js.native
   def getBounds(): LatLngBounds = js.native
+  def addLayer(l: Layer): FeatureGroup = js.native
 }
 
 @JSGlobal("L.TileLayer")
@@ -141,6 +142,8 @@ class Layer extends js.Object {
   def removeFrom(map: LeafletMap): Layer = js.native
 
   def getPane(name: UndefOr[String] = ""): HTMLElement = js.native
+
+  def eachLayer(fn: js.Function1[Layer, Unit]): Layer = js.native
 }
 
 @JSGlobal("L.ImageOverlay")
@@ -464,7 +467,7 @@ class LayerGroup extends Layer {
 
   def hasLayer(layer: Layer): Boolean = js.native
 
-  def eachLayer(fn: js.Function1[Layer, Unit]): LayerGroup = js.native
+  override def eachLayer(fn: js.Function1[Layer, Unit]): Layer = js.native
 }
 
 @JSGlobal("L.Bounds")
