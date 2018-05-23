@@ -64,7 +64,7 @@ lazy val `leaflet-facade` = project.in(file("leaflet"))
         "org.scala-js" %%% "scalajs-dom" % "0.9.4"
       ),
       jsDependencies ++= Seq(
-        "org.webjars.npm" %%% "leaflet" % "1.3.1"
+        "org.webjars.npm" % "leaflet" % "1.3.1" / "leaflet.js"
       )
     )
   .enablePlugins(ScalaJSPlugin)
