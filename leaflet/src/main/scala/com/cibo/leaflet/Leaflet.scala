@@ -9,13 +9,13 @@
 
 package com.cibo.leaflet
 
-import Leaflet.MultipolygonCoords
+import com.cibo.leaflet.Leaflet.MultipolygonCoords
+import org.scalajs.dom.Element
+import org.scalajs.dom.raw.HTMLElement
 
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
 import scala.scalajs.js.annotation.{JSGlobal, JSName}
-import org.scalajs.dom.raw.HTMLElement
-import org.scalajs.dom.Element
 
 @JSGlobal("L")
 @js.native
@@ -44,6 +44,8 @@ object Leaflet extends js.Object {
 
   def polygon(latlngs: PolygonCoords): Polygon = js.native
 
+  def polyline(coords: js.Array[LatLng], opts: UndefOr[PolyLineOptions] = js.undefined): Polyline = js.native
+
   @JSName("polygon")
   def multiPolygon(
     multiPolygon: MultipolygonCoords,
@@ -52,13 +54,23 @@ object Leaflet extends js.Object {
 
   def layerGroup[T <: Layer](layers: js.Array[T]): LayerGroup = js.native
 
+  def featureGroup[T <: Layer](layers: js.Array[T]): FeatureGroup = js.native
+
   def on(name: String, fn: js.Function1[Evented, Evented]): this.type = js.native
 
   def circle(latLng: LatLng, radius: Double, pathOptions: PathOptions): Circle = js.native
 
-  def marker(latlngs: LatLng): Marker = js.native
+  def marker(latlngs: LatLng, options: UndefOr[MarkerOptions] = js.undefined): Marker = js.native
+
+  def icon(options: UndefOr[IconOptions] = js.undefined): Icon = js.native
 
   def geoJSON(data: js.Object): GeoJSON = js.native
+}
+
+@JSGlobal("L.Icon")
+@js.native
+class Icon extends js.Object {
+
 }
 
 @JSGlobal("L.Evented")
@@ -98,8 +110,12 @@ class GridLayerOptionsBuilder(val dict: OptMap)
 
 @JSGlobal("L.Marker")
 @js.native
-class Marker extends js.Object {
-  def addTo(map: LeafletMap): Layer = js.native
+class Marker extends Layer {
+
+  def setLatLng(latLng: LatLng): Unit = js.native
+
+  def on(name: String, fn: js.Function1[Evented, Evented]): this.type = js.native
+
 }
 
 @JSGlobal("L.MouseEvent")
@@ -118,12 +134,14 @@ class Circle extends Path {
 
 @JSGlobal("L.FeatureGroup")
 @js.native
-class FeatureGroup extends Layer {
+abstract class FeatureGroup extends LayerGroup {
   def setStyle(pathOptions: PathOptions): FeatureGroup = js.native
+
   def bringToFront(): FeatureGroup = js.native
+
   def bringToBack(): FeatureGroup = js.native
+
   def getBounds(): LatLngBounds = js.native
-  def addLayer(l: Layer): FeatureGroup = js.native
 }
 
 @JSGlobal("L.TileLayer")
@@ -135,7 +153,12 @@ case class TileLayerOptions(maxZoom: Double)
 @JSGlobal("L.Layer")
 @js.native
 class Layer extends js.Object {
+
+
   def addTo(map: LeafletMap): Layer = js.native
+
+
+  def addTo(map: LayerGroup): Layer = js.native
 
   def remove(): Layer = js.native
 
@@ -143,7 +166,9 @@ class Layer extends js.Object {
 
   def getPane(name: UndefOr[String] = ""): HTMLElement = js.native
 
-  def eachLayer(fn: js.Function1[Layer, Unit]): Layer = js.native
+  def bindPopup(content: HTMLElement) {
+    js.native
+  }
 }
 
 @JSGlobal("L.ImageOverlay")
@@ -220,26 +245,11 @@ class GridLayer extends Layer {
   def getTileSize(): GridLayer = js.native
 }
 
-@js.native
-trait IProjection extends js.Object {
-  def project(latLng: LatLng): Point = js.native
-
-  def unproject(point: Point): LatLng = js.native
-
-  val bounds: LatLngBounds = js.native
-}
-
-@JSGlobal("L.Projection")
-@js.native
-object Projection extends IProjection {
-  val LonLat: IProjection = js.native
-  val Mercator: IProjection = js.native
-  val SphericalMercator: IProjection = js.native
-}
-
 @JSGlobal("L.LatLngBounds")
 @js.native
 class LatLngBounds(southWest: LatLng, northEast: LatLng) extends js.Object {
+  def isValid(): Boolean = js.native
+
   def getSouthEast(): LatLng = js.native
 
   def getSouthWest(): LatLng = js.native
@@ -400,13 +410,15 @@ abstract class Path extends Layer {
 
 @JSGlobal("L.Polyline")
 @js.native
-class Polyline extends PolyLineOptions {
+class Polyline extends Path {
   def getBounds(): LatLngBounds = js.native
+
+  def setLatLngs(value: js.Array[LatLng]): Polyline = js.native
 }
 
 @JSGlobal
 @js.native
-class PolyLineOptions extends Path
+class PolyLineOptions extends js.Object
 
 object PolyLineOptions extends PolyLineOptionsBuilder(noOpts)
 
@@ -416,6 +428,77 @@ class PolyLineOptionsBuilder(val dict: OptMap)
   def color(v: String): PolyLineOptionsBuilder = jsOpt("color", v)
 
   def fillOpacity(v: Double): PolyLineOptionsBuilder = jsOpt("fillOpacity", v)
+}
+
+@JSGlobal
+@js.native
+class IconOptions extends js.Object
+
+object IconOptions extends IconOptionsBuilder(noOpts)
+
+class IconOptionsBuilder(val dict: OptMap)
+  extends JSOptionBuilder[IconOptions, IconOptionsBuilder](new IconOptionsBuilder(_)) {
+
+  def url(v: String) = jsOpt("iconUrl", v)
+
+  def retinaUrl(v: String) = jsOpt("iconRetinaUrl", v)
+
+  def size(v: Point) = jsOpt("iconSize", v)
+
+  def anchor(v: Point) = jsOpt("iconAnchor", v)
+
+  def popupAnchor(v: Point) = jsOpt("popupAnchor", v)
+
+  def tooltipAnchor(v: Point) = jsOpt("tooltipAnchor", v)
+
+  def shadowUrl(v: String) = jsOpt("shadowUrl", v)
+
+  def shadowRetinaUrl(v: String) = jsOpt("shadowRetinaUrl", v)
+
+  def shadowSize(v: Point) = jsOpt("shadowSize", v)
+
+  def shadowAnchor(v: Point) = jsOpt("shadowAnchor", v)
+
+  def className(v: String) = jsOpt("className", v)
+}
+
+
+@JSGlobal
+@js.native
+class MarkerOptions extends js.Object
+
+object MarkerOptions extends MarkerOptionsBuilder(noOpts)
+
+class MarkerOptionsBuilder(val dict: OptMap)
+  extends JSOptionBuilder[MarkerOptions, MarkerOptionsBuilder](new MarkerOptionsBuilder(_)) {
+
+  def icon(v: Icon) = jsOpt("icon", v)
+
+  def draggable(v: Boolean) = jsOpt("draggable", v)
+
+  def autoPan(v: Boolean) = jsOpt("autoPan", v)
+
+  def autoPanPadding(v: Point) = jsOpt("autoPanPadding", v)
+
+  def autoPanSpeed(v: Int) = jsOpt("autoPanSpeed", v)
+
+  def keyboard(v: Boolean) = jsOpt("keyboard", v)
+
+  def title(v: String) = jsOpt("title", v)
+
+  def alt(v: String) = jsOpt("alt", v)
+
+  def zIndexOffset(v: Int) = jsOpt("zIndexOffset", v)
+
+  def opacity(v: Int) = jsOpt("opacity", v)
+
+  def riseOnHover(v: Boolean) = jsOpt("riseOnHover", v)
+
+  def riseOffset(v: Int) = jsOpt("riseOffset", v)
+
+  def pane(v: String) = jsOpt("pane", v)
+
+  def bubblingMouseEvents(v: Boolean) = jsOpt("bubblingMouseEvents", v)
 }
 
 @JSGlobal
@@ -467,7 +550,7 @@ class LayerGroup extends Layer {
 
   def hasLayer(layer: Layer): Boolean = js.native
 
-  override def eachLayer(fn: js.Function1[Layer, Unit]): Layer = js.native
+  def eachLayer(fn: js.Function1[Layer, Unit]): LayerGroup = js.native
 }
 
 @JSGlobal("L.Bounds")
