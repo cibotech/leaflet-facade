@@ -64,7 +64,7 @@ lazy val `leaflet-facade` = project.in(file("leaflet"))
         "org.scala-js" %%% "scalajs-dom" % "0.9.4"
       ),
       jsDependencies ++= Seq(
-        "org.webjars.npm" % "leaflet" % "1.3.1" / "leaflet.js"
+        "org.webjars.npm" % "leaflet" % "1.3.1" / "1.3.1/dist/leaflet.js"
       )
     )
   .enablePlugins(ScalaJSPlugin)
@@ -76,26 +76,7 @@ lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
     name := "leaflet-draw-facade",
     jsDependencies ++= Seq(
       "org.webjars.bowergithub.leaflet" % "leaflet.draw" % "1.0.2" / "leaflet.draw.js"
-    ),
-    jsManifestFilter := {
-      import org.scalajs.core.tools.jsdep.{JSDependencyManifest, JSDependency}
-
-      (seq: Traversable[JSDependencyManifest]) => {
-        seq map { manifest =>
-
-          def isOkToInclude(jsDep: JSDependency): Boolean = {
-            jsDep.resourceName != "leaflet.js"
-          }
-
-          new JSDependencyManifest(
-            origin = manifest.origin,
-            libDeps = manifest.libDeps filter isOkToInclude,
-            requiresDOM = manifest.requiresDOM,
-            compliantSemantics = manifest.compliantSemantics
-          )
-        }
-      }
-    }
+    )
   )
   .dependsOn(`leaflet-facade`)
   .enablePlugins(ScalaJSPlugin)
