@@ -51,6 +51,7 @@ lazy val globalSettings = Seq(
 lazy val root = project.in(file("."))
     .aggregate(`leaflet-facade`, `leaflet-draw`)
     .settings(
+      crossScalaVersions := Seq("2.11.8", "2.12.4"),
       publishArtifact := false,
       publish := {}
     )
@@ -58,6 +59,7 @@ lazy val root = project.in(file("."))
 lazy val `leaflet-facade` = project.in(file("leaflet"))
     .settings(globalSettings)
     .settings(
+      crossScalaVersions := Seq("2.11.8", "2.12.4"),
       licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
       name := "leaflet-facade",
       libraryDependencies ++= Seq(
@@ -72,6 +74,7 @@ lazy val `leaflet-facade` = project.in(file("leaflet"))
 lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
   .settings(globalSettings)
   .settings(
+    crossScalaVersions := Seq("2.11.8", "2.12.4"),
     licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
     name := "leaflet-draw-facade",
     jsDependencies ++= Seq(
