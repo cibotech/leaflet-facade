@@ -75,7 +75,7 @@ lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
     licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause")),
     name := "leaflet-draw-facade",
     jsDependencies ++= Seq(
-      "org.webjars.bowergithub.leaflet" % "leaflet.draw" % "1.0.2" / "leaflet.draw.js"
+      "org.webjars.npm" % "leaflet-draw" % "1.0.2" / "leaflet.draw.js"
     )
   )
   .dependsOn(`leaflet-facade`)
