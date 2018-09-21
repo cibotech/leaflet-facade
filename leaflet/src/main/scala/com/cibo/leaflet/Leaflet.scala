@@ -166,7 +166,7 @@ class Layer extends js.Object {
 
   def getPane(name: UndefOr[String] = ""): HTMLElement = js.native
 
-  def bindPopup(content: HTMLElement) {
+  def bindPopup(content: HTMLElement, options: UndefOr[PopupOptions] = js.undefined): Unit = {
     js.native
   }
 }
@@ -428,6 +428,40 @@ class PolyLineOptionsBuilder(val dict: OptMap)
   def color(v: String): PolyLineOptionsBuilder = jsOpt("color", v)
 
   def fillOpacity(v: Double): PolyLineOptionsBuilder = jsOpt("fillOpacity", v)
+}
+
+@JSGlobal
+@js.native
+class PopupOptions extends js.Object
+
+object PopupOptions extends PopupOptionsBuilder(noOpts)
+
+class PopupOptionsBuilder(val dict: OptMap)
+  extends JSOptionBuilder[PopupOptions, PopupOptionsBuilder](new PopupOptionsBuilder(_)) {
+  def maxWidth(v: Double): PopupOptionsBuilder = jsOpt("maxWidth", v)
+
+  def minWidth(v: Double): PopupOptionsBuilder = jsOpt("minWidth", v)
+
+  def maxHeight(v: Double): PopupOptionsBuilder = jsOpt("maxHeight", v)
+
+  def autoPan(v: Boolean): PopupOptionsBuilder = jsOpt("autoPan", v)
+
+  def autoPanPaddingTopLeft(v: Point): PopupOptionsBuilder =
+    jsOpt("autoPanPaddingTopLeft", v)
+
+  def autoPanPadding(v: Point): PopupOptionsBuilder = jsOpt("autoPanPadding", v)
+
+  def keepInView(v: Boolean): PopupOptionsBuilder = jsOpt("keepInView", v)
+
+  def closeButton(v: Boolean): PopupOptionsBuilder = jsOpt("closeButton", v)
+
+  def autoClose(v: Boolean): PopupOptionsBuilder = jsOpt("autoClose", v)
+
+  def closeOnEscapeKey(v: Boolean): PopupOptionsBuilder = jsOpt("closeOnEscapeKey", v)
+
+  def closeOnClick(v: Boolean): PopupOptionsBuilder = jsOpt("closeOnClick", v)
+
+  def className(v: String): PopupOptionsBuilder = jsOpt("className", v)
 }
 
 @JSGlobal
