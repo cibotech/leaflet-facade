@@ -46,6 +46,11 @@ object Leaflet extends js.Object {
 
   def polyline(coords: js.Array[LatLng], opts: UndefOr[PolyLineOptions] = js.undefined): Polyline = js.native
 
+  def popup(
+    options: UndefOr[PopupOptions] = js.undefined,
+    source: UndefOr[Layer] = js.undefined
+  ): Popup = js.native
+
   @JSName("polygon")
   def multiPolygon(
     multiPolygon: MultipolygonCoords,
@@ -154,7 +159,6 @@ case class TileLayerOptions(maxZoom: Double)
 @js.native
 class Layer extends js.Object {
 
-
   def addTo(map: LeafletMap): Layer = js.native
 
 
@@ -169,6 +173,8 @@ class Layer extends js.Object {
   def bindPopup(content: HTMLElement, options: UndefOr[PopupOptions] = js.undefined): Unit = {
     js.native
   }
+
+  def bindPopup(content: Popup): Unit = js.native
 }
 
 @JSGlobal("L.ImageOverlay")
@@ -344,6 +350,30 @@ class Control(position: UndefOr[String] = "topright") extends js.Object {
   def addTo(map: LeafletMap): Control = js.native
 
   def remove(): Control = js.native
+}
+
+@JSGlobal("L.Popup")
+@js.native
+class Popup(options: UndefOr[PopupOptions] = js.undefined, source: UndefOr[Layer] = js.undefined) extends Layer {
+  def getLatLng(): LatLng = js.native
+
+  def setLatLng(latlng: LatLng): Popup = js.native
+
+  def getContent(): HTMLElement = js.native
+
+  def setContent(content: HTMLElement): Popup = js.native
+
+  def getElement(): HTMLElement = js.native
+
+  def update(): Unit = js.native
+
+  def isOpen(): Boolean = js.native
+
+  def bringToFront(): Popup = js.native
+
+  def bringToBack(): Popup = js.native
+
+  def openOn(map: LeafletMap): Popup = js.native
 }
 
 @JSGlobal("L.Control.Scale")
