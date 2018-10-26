@@ -1,4 +1,5 @@
 import ReleaseTransformations._
+import execnpm.NpmDeps.Dep
 
 
 homepage := Some(url("https://github.com/cibotech/leaflet-facade"))
@@ -50,15 +51,6 @@ lazy val globalSettings = Seq(
   licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause"))
 )
 
-lazy val root = project.in(file("."))
-  .aggregate(`leaflet-facade`, `leaflet-draw`)
-  .settings(
-    crossScalaVersions := Seq("2.11.8", "2.12.4"),
-    releaseCrossBuild := true,
-    publishArtifact := false,
-    publish := {}
-  )
-
 lazy val `leaflet-facade` = project.in(file("leaflet"))
   .settings(globalSettings)
   .settings(
@@ -68,10 +60,8 @@ lazy val `leaflet-facade` = project.in(file("leaflet"))
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.9.4"
     ),
-    jsDependencies ++= Seq(
-      "org.webjars.npm" % "leaflet" % "1.3.1" / "1.3.1/dist/leaflet.js"
-    )
-  ) enablePlugins (ScalaJSPlugin)
+    npmDeps in Compile += Dep("leaflet", "1.3.4", List("leaflet.js"))
+  ) enablePlugins (ExecNpmPlugin)
 
 lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
   .settings(globalSettings)
@@ -79,7 +69,32 @@ lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
     crossScalaVersions := Seq("2.11.8", "2.12.4"),
     releaseCrossBuild := true,
     name := "leaflet-draw-facade",
-    jsDependencies ++= Seq(
-      "org.webjars.npm" % "leaflet-draw" % "1.0.2" / "leaflet.draw.js"
-    )
-  ) dependsOn (`leaflet-facade`) enablePlugins (ScalaJSPlugin)
+    npmDeps in Compile += Dep("leaflet-draw", "1.0.4", List("leaflet-draw.js"))
+  ) dependsOn (`leaflet-facade`) enablePlugins (ExecNpmPlugin)
+
+lazy val `leaflet-pm` = project.in(file("leaflet-pm"))
+  .settings(globalSettings)
+  .settings(
+    crossScalaVersions := Seq("2.11.8", "2.12.4"),
+    releaseCrossBuild := true,
+    name := "leaflet-pm",
+    npmDeps in Compile += Dep("leaflet.pm", "0.25.0", List("leaflet.pm.min.js"))
+  ) dependsOn (`leaflet-facade`) enablePlugins (ExecNpmPlugin)
+
+
+
+lazy val build = taskKey[Unit]("build")
+lazy val demo = project.in(file("target/demo"))
+  .settings(
+    crossScalaVersions := Seq("2.11.8", "2.12.4"),
+    releaseCrossBuild := true,
+    publishArtifact := false,
+    name := "leaflet-demo",
+    publish := {},
+    build := {
+      val rootTarget = (target in aggregate in Compile).value
+      val buildJS = (fullOptJS in aggregate in Compile).value
+
+      IO.copyFile(buildJS.data, rootTarget / "js/leaflet-facade.js")
+      IO.copyFile(dependencyFile.value, rootTarget / "js/leaflet-facade-deps.js")
+    }) enablePlugins (ExecNpmPlugin) dependsOn(`leaflet-draw`, `leaflet-pm`)
