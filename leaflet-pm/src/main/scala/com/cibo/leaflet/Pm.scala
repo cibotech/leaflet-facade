@@ -13,15 +13,15 @@ object PM {
   }
 
   // Monkey patching JQuery with implicit conversion
-  implicit def jq2semantic(jq: LeafletMap): Mapify = jq.asInstanceOf[Mapify]
+  implicit def leafmap2Mapify(jq: LeafletMap): Mapify = jq.asInstanceOf[Mapify]
 }
 
 @JSGlobal
 @js.native
 class Map extends js.Object {
-  def addControls(options: ToolbarOptions = ???): Unit = js.native
+  def addControls(options: js.UndefOr[ToolbarOptions]): Unit = js.native
 
-  def enableDraw(shape: String, options: DrawOptions = ???): Unit = js.native
+  def enableDraw(shape: String, options: js.UndefOr[DrawOptions]): Unit = js.native
 
   def disableDraw(shape: String): Unit = js.native
 
@@ -31,7 +31,7 @@ class Map extends js.Object {
 
   def globalEditEnabled(): Boolean = js.native
 
-  def toggleGlobalEditMode(options: EditOptions = ???): Unit = js.native
+  def toggleGlobalEditMode(options: js.UndefOr[EditOptions]): Unit = js.native
 
   // var Draw: Draw = js.native
 }
@@ -59,59 +59,101 @@ class ToolBarOptionsBuilder(val dict: OptMap)
   def deleteLayer(v: Boolean): ToolBarOptionsBuilder = jsOpt("deleteLayer", v)
 }
 
+@JSGlobal
 @js.native
-trait DrawOptions extends js.Object {
-  var templineStyle: PathOptions = js.native
-  var hintlineStyle: PathOptions = js.native
-  var pathOptions: PathOptions = js.native
+class DrawOptions extends js.Object
+
+object DrawOptions extends DrawOptionsBuilder(noOpts)
+
+class DrawOptionsBuilder(val dict: OptMap)
+  extends JSOptionBuilder[DrawOptions, DrawOptionsBuilder](
+    new DrawOptionsBuilder(_)) {
+  def templineStyle(v: PathOptions): DrawOptionsBuilder = jsOpt("templineStyle", v)
+
+  def hintlineStyle(v: PathOptions): DrawOptionsBuilder = jsOpt("hintlineStyle", v)
+
+  def pathOptions(v: PathOptions): DrawOptionsBuilder = jsOpt("pathOptions", v)
 }
 
+@JSGlobal
 @js.native
-trait EditOptions extends js.Object {
-  var draggable: Boolean = js.native
-  var snappable: Boolean = js.native
-  var snapDistance: Double = js.native
+class EditOptions extends js.Object
+
+object EditOptions extends EditOptionsBuilder(noOpts)
+
+class EditOptionsBuilder(val dict: OptMap)
+  extends JSOptionBuilder[EditOptions, EditOptionsBuilder](
+    new EditOptionsBuilder(_)) {
+  def draggable(v: PathOptions): EditOptionsBuilder = jsOpt("draggable", v)
+
+  def snappable(v: PathOptions): EditOptionsBuilder = jsOpt("snappable", v)
+
+  def snapDistance(v: PathOptions): EditOptionsBuilder = jsOpt("snapDistance", v)
 }
 
 package Edit {
 
+  @JSGlobal
   @js.native
-  trait Line extends js.Object {
-    def enable(options: EditOptions = ???): Unit = js.native
-
-    def disable(poly: Layer = ???): Unit = js.native
-
-    def toggleEdit(options: EditOptions = ???): Unit = js.native
-
-    def enabled(): Boolean = js.native
+  class Line extends js.Object{
+    def enabled: Boolean = js.native
   }
 
-  @js.native
-  trait Marker extends js.Object {
-    def enable(options: EditOptions = ???): Unit = js.native
+  object Line extends LineBuilder(noOpts)
 
-    def disable(): Unit = js.native
+  class LineBuilder(val dict: OptMap)
+    extends JSOptionBuilder[Line, LineBuilder](
+      new LineBuilder(_)) {
+    def enable(v: js.UndefOr[EditOptions]): LineBuilder = jsOpt("enable", v)
 
-    def toggleEdit(options: EditOptions = ???): Unit = js.native
+    def disable(v: js.UndefOr[Layer]): LineBuilder = jsOpt("disable", v)
 
-    def enabled(): Boolean = js.native
+    def toggleEdit(v: js.UndefOr[EditOptions]): LineBuilder = jsOpt("toggleEdit", v)
   }
 
+  @JSGlobal
   @js.native
-  trait LayerGroup extends js.Object {
-    def enable(options: EditOptions = ???): Unit = js.native
+  class Marker extends js.Object{
+    def enabled: Boolean = js.native
+  }
 
-    def disable(): Unit = js.native
+  object Marker extends MarkerBuilder(noOpts)
 
-    def toggleEdit(options: EditOptions = ???): Unit = js.native
+  class MarkerBuilder(val dict: OptMap)
+    extends JSOptionBuilder[Marker, MarkerBuilder](
+      new MarkerBuilder(_)) {
 
-    def enabled(): Boolean = js.native
+    def enable(v: js.UndefOr[EditOptions]): MarkerBuilder = jsOpt("enable", v)
+
+    def disable(): MarkerBuilder = jsOpt("disable", js.undefined)
+
+    def toggleEdit(v: js.UndefOr[EditOptions]): MarkerBuilder = jsOpt("toggleEdit", v)
+  }
+
+  @JSGlobal
+  @js.native
+  class LayerGroup extends js.Object {
 
     def findLayers(): js.Array[Layer] = js.native
 
     def dragging(): Boolean = js.native
 
     def getOptions(): EditOptions = js.native
+  }
+
+  object LayerGroup extends LayerGroupBuilder(noOpts)
+
+  class LayerGroupBuilder(val dict: OptMap)
+    extends JSOptionBuilder[LayerGroup, LayerGroupBuilder](
+      new LayerGroupBuilder(_)) {
+
+    def enable(v: js.UndefOr[EditOptions]): LayerGroupBuilder = jsOpt("enable", v)
+
+    def disable(): LayerGroupBuilder = jsOpt("disable", js.undefined)
+
+    def toggleEdit(v: js.UndefOr[EditOptions]): LayerGroupBuilder = jsOpt("toggleEdit", v)
+
+    def enabled(v: Boolean): LayerGroupBuilder = jsOpt("enabled", v)
   }
 
 }
