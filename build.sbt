@@ -82,19 +82,21 @@ lazy val `leaflet-pm` = project.in(file("leaflet-pm"))
   ) dependsOn (`leaflet-facade`) enablePlugins (ExecNpmPlugin)
 
 
-
-lazy val build = taskKey[Unit]("build")
-lazy val demo = project.in(file("target/demo"))
+lazy val buildExample = taskKey[Unit]("build")
+lazy val example = project.in(file("example"))
   .settings(
     crossScalaVersions := Seq("2.11.8", "2.12.4"),
     releaseCrossBuild := true,
     publishArtifact := false,
-    name := "leaflet-demo",
+    name := "leaflet-example",
     publish := {},
-    build := {
-      val rootTarget = (target in aggregate in Compile).value
-      val buildJS = (fullOptJS in aggregate in Compile).value
+    buildExample := {
+      val exampleTarget = (target in Compile).value
+      val exampleResource = (resourceDirectory in Compile).value
+      val buildJS = (fullOptJS in Compile).value
 
-      IO.copyFile(buildJS.data, rootTarget / "js/leaflet-facade.js")
-      IO.copyFile(dependencyFile.value, rootTarget / "js/leaflet-facade-deps.js")
+      // Copy js and deps files and resource directory in exemple target
+      IO.copyFile(buildJS.data, exampleTarget / "js/leaflet-facade.js")
+      IO.copyFile(dependencyFile.value, exampleTarget / "js/leaflet-facade-deps.js")
+      IO.copyDirectory(exampleResource, exampleTarget)
     }) enablePlugins (ExecNpmPlugin) dependsOn(`leaflet-draw`, `leaflet-pm`)

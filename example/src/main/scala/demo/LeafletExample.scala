@@ -4,13 +4,15 @@ package demo
 import com.cibo.leaflet.{LatLng, Leaflet}
 
 import scala.scalajs.js
+import scala.scalajs.js.annotation.JSExportTopLevel
 
 
-object LeafletExample extends js.JSApp {
+object LeafletExample {
 
   import js.JSConverters._
 
-  def main(): Unit = {
+  @JSExportTopLevel("example")
+  def example(): Unit = {
 
     val leafletMap = Leaflet.map("demo-map").setView(LatLng(51.505, -0.09), 13)
 
