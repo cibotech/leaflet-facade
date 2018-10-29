@@ -1,7 +1,9 @@
 package demo
 
 
-import com.cibo.leaflet.{LatLng, Leaflet}
+import com.cibo.leaflet.pm.PM._
+import com.cibo.leaflet._
+import com.cibo.leaflet.pm.ToolbarOptions
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -27,5 +29,8 @@ object LeafletExample {
     ).toJSArray
 
     Leaflet.polygon(js.Array(coords)).addTo(leafletMap)
+
+    // PM
+    leafletMap.pm.addControls(ToolbarOptions.drawPolygon(true).build)
   }
 }
