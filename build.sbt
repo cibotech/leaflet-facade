@@ -1,4 +1,5 @@
 import ReleaseTransformations._
+import execnpm.NpmDeps
 import execnpm.NpmDeps.Dep
 
 
