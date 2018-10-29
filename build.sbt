@@ -47,7 +47,6 @@ lazy val globalSettings = Seq(
   bintrayOrganization := Some("cibotech"),
   bintrayRepository := "public",
   bintrayPackageLabels := Seq("scala", "scala.js", "leaflet"),
-  requiresDOM := true,
   licenses += ("BSD Simplified", url("https://opensource.org/licenses/BSD-3-Clause"))
 )
 
@@ -69,7 +68,7 @@ lazy val `leaflet-draw` = project.in(file("leaflet-draw"))
     crossScalaVersions := Seq("2.11.8", "2.12.4"),
     releaseCrossBuild := true,
     name := "leaflet-draw-facade",
-    npmDeps in Compile += Dep("leaflet-draw", "1.0.4", List("leaflet-draw.js"))
+    npmDeps in Compile += Dep("leaflet-draw", "1.0.4", List("leaflet.draw.js"))
   ) dependsOn (`leaflet-facade`) enablePlugins (ExecNpmPlugin)
 
 lazy val `leaflet-pm` = project.in(file("leaflet-pm"))
@@ -78,7 +77,7 @@ lazy val `leaflet-pm` = project.in(file("leaflet-pm"))
     crossScalaVersions := Seq("2.11.8", "2.12.4"),
     releaseCrossBuild := true,
     name := "leaflet-pm",
-    npmDeps in Compile += Dep("leaflet.pm", "0.25.0", List("leaflet.pm.min.js"))
+    npmDeps in Compile += Dep("leaflet.pm", "0.25.0", List("leaflet.pm.min.js"), true)
   ) dependsOn (`leaflet-facade`) enablePlugins (ExecNpmPlugin)
 
 
@@ -99,4 +98,4 @@ lazy val example = project.in(file("example"))
       IO.copyFile(buildJS.data, exampleTarget / "js/leaflet-facade.js")
       IO.copyFile(dependencyFile.value, exampleTarget / "js/leaflet-facade-deps.js")
       IO.copyDirectory(exampleResource, exampleTarget)
-    }) enablePlugins (ExecNpmPlugin) dependsOn(`leaflet-draw`, `leaflet-pm`)
+    }) enablePlugins (ExecNpmPlugin) dependsOn(`leaflet-pm`, `leaflet-draw`)
