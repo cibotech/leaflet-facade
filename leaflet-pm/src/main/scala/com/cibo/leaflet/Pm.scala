@@ -6,13 +6,13 @@ import com.cibo.leaflet._
 
 object PM {
 
-  // Monkey patching JQuery
+  // Monkey patching
   @js.native
   trait Mapify extends LeafletMap {
     def pm: Map = js.native
   }
 
-  // Monkey patching JQuery with implicit conversion
+  // Monkey patching with implicit conversion
   implicit def leafmap2Mapify(jq: LeafletMap): Mapify = jq.asInstanceOf[Mapify]
 }
 
