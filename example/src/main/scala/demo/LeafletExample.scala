@@ -1,20 +1,16 @@
 package demo
 
 
-import com.cibo.leaflet.pm._
-import com.cibo.leaflet.pm.PM._
-import com.cibo.leaflet._
+import com.cibo.leaflet.{LatLng, Leaflet}
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportTopLevel
 
 
-object LeafletExample {
+object LeafletExample extends js.JSApp {
 
   import js.JSConverters._
 
-  @JSExportTopLevel("example")
-  def example(): Unit = {
+  def main(): Unit = {
 
     val leafletMap = Leaflet.map("demo-map").setView(LatLng(51.505, -0.09), 13)
 
@@ -29,8 +25,5 @@ object LeafletExample {
     ).toJSArray
 
     Leaflet.polygon(js.Array(coords)).addTo(leafletMap)
-
-    // PM
-    leafletMap.pm.addControls(ToolbarOptions.drawPolygon(false).drawMarker(true))
   }
 }

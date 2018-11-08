@@ -9,8 +9,6 @@
 
 package com.cibo
 
-import scalajs.js
-
 package object leaflet {
 
   /**
@@ -21,6 +19,4 @@ package object leaflet {
   type OptMap = scala.collection.Map[String, Any]
 
   val noOpts = Map.empty[String, Any]
-
-  implicit def jsOptionBuilderToUndefOr[A <: js.Object ,B <: JSOptionBuilder[A, _]](builder: JSOptionBuilder[A, B]): js.UndefOr[A] = builder.build
 }
